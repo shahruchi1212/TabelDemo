@@ -1,0 +1,63 @@
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+.icon-reverse {
+  width: 14px;
+  height: 14px;
+  transform: rotate(180deg);
+}
+
+.vertical-rule {
+  height: 25px;
+  border-left: 1px solid gray;
+}
+
+.table-header {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left-table-header-container {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.per-page-selector {
+  width: 150px;
+  height: 30px;
+}
+
+.search-input {
+  padding: 10px;
+  height: 10px;
+}
+
+.table{
+ width: 100%;
+}
+
+.table-th {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.table-data {
+  padding: 10px;
+}
+
+.table-row:nth-child(even) {
+  background-color: lightblue;
+}
+
+.pagination-container {
+  gap: 10px;
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: flex-end;
+}

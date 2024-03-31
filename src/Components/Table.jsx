@@ -60,31 +60,48 @@ const Table = () => {
   }, [search, sortBy, sortOrder]);
 
   const handlePerPageChange = (event) => {
-    setPerPage(event.target.value);
+    const { value } = event.target;
+
+    setPerPage(value);
     setPage(0);
-    setTabelData([...data.slice(0, event.target.value)]);
+    setTabelData([...data.slice(0, value)]);
   };
 
   const handelPreviousClick = () => {
-    setPage((prev) => prev - 1);
-    setTabelData([
-      ...data.slice((page - 1) * perPage, perPage * (page - 1) + perPage),
-    ]);
+    setPage((prev) => {
+      setTabelData([
+        ...data.slice(
+          (prev - 1) * perPage,
+          parseInt(perPage * (prev - 1)) + parseInt(perPage)
+        ),
+      ]);
+
+      return prev - 1;
+    });
   };
 
   const handelNextClick = () => {
-    setPage((prev) => prev + 1);
-    setTabelData([
-      ...data.slice((page + 1) * perPage, perPage * (page + 1) + perPage),
-    ]);
+    setPage((prev) => {
+      setTabelData([
+        ...data.slice(
+          (prev + 1) * perPage,
+          parseInt(perPage * (prev + 1)) + parseInt(perPage)
+        ),
+      ]);
+
+      return prev + 1;
+    });
   };
 
   const handleSearch = (event) => {
-    setSearch(event.target.value);
+    const { value } = event.target;
+
+    setSearch(value);
     setPage(0);
   };
 
   const handleSort = (columName, order) => () => {
+    setPage(0);
     setSortBy(columName);
     setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
   };
@@ -96,14 +113,14 @@ const Table = () => {
       <div className="table-header">
         <div className="left-table-header-container">
           <span>
-            Showing {page * perPage} to{" "}
-            {data.length < perPage * page + perPage
+            Showing {page * perPage + 1} to{" "}
+            {data.length < parseInt(perPage * page) + parseInt(perPage)
               ? data.length
-              : perPage * page + perPage}{" "}
+              : parseInt(perPage * page) + parseInt(perPage)}{" "}
             of {data.length}
           </span>
 
-          <div class="vertical-rule"></div>
+          <div className="vertical-rule"></div>
 
           <label htmlFor="perpage">Per Page</label>
 
@@ -117,7 +134,7 @@ const Table = () => {
             <option value={5}>5</option>
           </select>
 
-          <div class="vertical-rule"></div>
+          <div className="vertical-rule"></div>
 
           <label htmlFor="columns">Columns</label>
 
@@ -168,7 +185,11 @@ const Table = () => {
             <tr className="table-row" key={item?.index}>
               {(selectedColumns.length ? selectedColumns : columns).map(
                 (column) => {
-                  return <td className="table-data">{item?.[column.key]}</td>;
+                  return (
+                    <td key={column.key} className="table-data">
+                      {item?.[column.key]}
+                    </td>
+                  );
                 }
               )}
             </tr>
